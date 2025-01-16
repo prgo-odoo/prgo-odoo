@@ -1,0 +1,7 @@
+<odoo>
+    <template id="contact_name" inherit_id="base.contact_name">
+        <xpath expr="//span[@itemprop='name']" position="attributes">
+            <attribute name="class" add="fw-bold modal-dialog-centered" separator=" "/>
+        </xpath>
+    </template>
+</odoo>
