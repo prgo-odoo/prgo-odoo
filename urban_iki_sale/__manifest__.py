@@ -16,10 +16,10 @@ Long description of module's purpose
     # for the full list
     'category': 'Uncategorized',
 
-    'version': '17.0.3.0.1',
+    'version': '17.0.3.0.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale_management', 'stock_delivery'],
+    'depends': ['sale_management', 'stock_delivery', 'sale'],
 
     # always loaded
     'data': [
@@ -32,6 +32,7 @@ Long description of module's purpose
         'views/report_invoice.xml',
         'views/account_move_line_views.xml',
         'report/report_deliveryslip.xml',
+        'report/report_sale_order.xml',
     ],
     'license': 'LGPL-3',
 }

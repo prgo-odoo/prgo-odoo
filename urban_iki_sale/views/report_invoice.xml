@@ -99,7 +99,7 @@
             <xpath expr="//h2" position="attributes">
                 <attribute name="class" add='text-reset' separator=" "/>
             </xpath>
-            <xpath expr="//div[@class='mt-5 clearfix']" position="attributes">
+            <xpath expr="//div['hasclass=mt-5 clearfix']" position="attributes">
                 <attribute name="class" remove='mt-5' add='mt-4' separator=" "/>
             </xpath>
 
@@ -161,7 +161,7 @@
 
              <!--<t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" -->
             <xpath expr="//t[@t-if='company.external_report_layout_id']" position="replace">
-                <t t-if="company.external_report_layout_id and o and (o._name=='account.move' or is_delivery_slip or env.context.get('delivery_slip', false))"
+                <t t-if="company.external_report_layout_id and o and (o._name=='account.move' or is_delivery_slip or is_sale_order or env.context.get('delivery_slip', false))"
                     t-call="urban_iki_sale.custom_header_footer_inherit"><t t-out="0"/>
                 </t>
             </xpath>

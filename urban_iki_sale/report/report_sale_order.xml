@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_saleorder_raw" inherit_id="sale.report_saleorder_raw">
+        <xpath expr="//t[@t-foreach='docs']" position="before">
+            <t t-set="is_sale_order" t-value="True"/>
+        </xpath>
+    </template>
+
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-set='address']" position="attributes">
+            <attribute name="t-if">1==0</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set='information_block']" position="attributes">
+            <attribute name="t-if">1==0</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set='information_block']//parent::t" position="before">
+            <t t-if='doc.partner_shipping_id == doc.partner_invoice_id == doc.partner_id'>
+                <div class="col-6" style="padding-top: 80px;">
+                    <div t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <p t-if="doc.partner_id.vat">
+                        <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
+                            t-out="doc.company_id.account_fiscal_country_id.vat_label" />
+                        <t t-else="">Tax ID</t>: <span t-field="doc.partner_id.vat" />
+                    </p>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-set='information_block']//parent::t" position="inside">
+            <div class="oe_structure" />
+            <div class="row" style="padding-top: 80px;">
+                <div class="col-6">
+                    <strong>
+                        <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+                            Invoicing and Shipping Address:
+                        </t>
+                        <t t-else="">
+                            Invoicing Address:
+                        </t>
+                    </strong>
+                    <div t-field="doc.partner_invoice_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
+                        <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+                            <strong>Shipping Address:</strong>
+                            <div t-field="doc.partner_shipping_id"
+                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' />
+                        </t>
+                </div>
+                <div class="col-6">
+                    <div t-field="doc.partner_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <p t-if="doc.partner_id.vat">
+                        <t t-if="doc.company_id.account_fiscal_country_id.vat_label"
+                            t-out="doc.company_id.account_fiscal_country_id.vat_label" />
+                        <t t-else="">Tax ID</t>: <span t-field="doc.partner_id.vat" />
+                    </p>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//h2/span[@t-field='doc.name']" position="attributes">
+            <attribute name="t-attf-class" value="d-none" />
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+        <xpath expr="//h2['hasclass=mt-4']" position="attributes">
+            <attribute name="class" add='d-none' separator=' '></attribute>
+        </xpath>
+        <xpath expr="//h2/span[@t-field='doc.name']" position="after">
+            <h2 class='mt-4'>
+                <span>ORDER CONFIRMATION</span>
+            </h2>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="t-if">1==0</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]//table[1]" position="before">
+            <div name="information_table_saleorder">
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <table class="text-start table-borderless">
+                            <tr>
+                                <td>
+                                    <strong>Order</strong>
+                                </td>
+                                <td> : </td>
+                                <td>&amp;nbsp;<span t-field="doc.name" class="ms-2" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Order Date</strong>
+                                </td>
+                                <td> : </td>
+                                <td>&amp;nbsp;<span t-field="doc.date_order" class="ms-2" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Customer Reference</strong>
+                                </td>
+                                <td> : </td>
+                                <td>&amp;nbsp;<span t-field="doc.client_order_ref" class="ms-2" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="text-start table-borderless">
+                            <tr>
+                                <td>
+                                    <strong>Total Amount</strong>
+                                </td>
+                                <td> : </td>
+                                <td> &amp;nbsp; <span t-field="doc.amount_total" class="ms-2" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="oe_structure"></div>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_our_art_no" class="text-start">Our Art No</th>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_your_art_no" class="text-start">Your Art No</th>
+        </xpath>
+        <xpath expr="//th[@name='th_quantity']" position="attributes">
+            <attribute name="t-esc">'Ordered'</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="t-attf-class" add="d-none" separator=" " />
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <td name="td_our_art_no">
+                <span t-field="line.product_id.default_code" />
+            </td>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="after">
+            <td name="td_your_art_no">
+                <span t-field="line.customer_product_numbers" />
+            </td>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="t-attf-class" add="d-none" separator=" " />
+        </xpath>
+    </template>
+</odoo>

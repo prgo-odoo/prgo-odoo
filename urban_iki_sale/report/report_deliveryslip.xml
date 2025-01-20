@@ -51,7 +51,7 @@
             <attribute name="t-attf-class" value="d-none"/>
             <attribute name="style">display: none !important;</attribute>
         </xpath>
-        <xpath expr="//div[@class='row mt32 mb32']" position="attributes">
+        <xpath expr="//div[@name='div_origin']//parent::div" position="attributes">
             <attribute name="style">display: none !important;</attribute>
         </xpath>
 
